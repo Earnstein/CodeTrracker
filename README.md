@@ -69,7 +69,7 @@ bash:
 powershell:
 python main.py --username YOUR_USERNAME --token YOUR_TOKEN --graph_id YOUR_GRAPH_ID
 
-``` 
+```
 
 ## License
 
