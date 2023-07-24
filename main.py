@@ -5,8 +5,17 @@ from datetime import datetime
 pixela_endpoint = "https://pixe.la/v1/users"
 
 
-# CREATING USER ACCOUNT
 def create_user(username: str, token: str):
+    """
+        Creates a new user account on Pixela.
+
+        Parameters:
+            username (str): The username for the new user.
+            token (str): The token to authenticate the user.
+
+        Returns:
+            str: Success message if the user is created, or an error message if not.
+        """
     try:
         my_user_details = {
             "token": token,
@@ -22,9 +31,15 @@ def create_user(username: str, token: str):
         print(f" an http error occurred: {e}")
 
 
-# CREATING TRACKER GRAPH
 def create_graph(username: str, token: str, graph_id: str):
-    """requires username, id, token and graph unit"""
+    """
+      Creates a new tracker graph on Pixela.
+
+      Parameters:
+          username (str): The username of the user creating the graph.
+          token (str): The token to authenticate the user.
+          graph_id (str): The ID for the new graph.
+      """
     user_unit = input("Pick a unit for your graph e.g commit, kilogram, calory, hour, day e.t.c")
     header = {
         "X-USER-TOKEN": token
@@ -64,9 +79,17 @@ def create_graph(username: str, token: str, graph_id: str):
         print(f" an http error occurred: {e}")
 
 
-# ADDING PIXELS THAT SHOWS HOURS OF DAILY CODING
 def add_pixel(username: str, graph_id: str, token: str, quantity: str, date: str):
-    """Adds a pixels to graph by passing username, graph_id, token, and quantity"""
+    """
+      Adds a pixel to the specified graph on Pixela.
+
+      Parameters:
+          username (str): The username of the user.
+          graph_id (str): The ID of the graph to add the pixel.
+          token (str): The token to authenticate the user.
+          quantity (str): The quantity value for the pixel.
+          date (str): The date in the format "YYYY-mm-dd" for the pixel (optional).
+      """
     if date == "":
         date = datetime.now().strftime("%Y%m%d")
     else:
@@ -74,7 +97,6 @@ def add_pixel(username: str, graph_id: str, token: str, quantity: str, date: str
             date = datetime.strptime(date, "%Y-%m-%d").strftime("%Y%m%d")
         except ValueError:
             print("Invalid date format! Please use the format: YYYY-mm-dd")
-            return None
     header = {
         "X-USER-TOKEN": token
     }
@@ -93,11 +115,18 @@ def get_user(username: str):
     user_endpoint = f"https://pixe.la/@{username}"
     response = get(url=user_endpoint)
     print(response.status_code)
-    return
+    print(f"User URL: {response.url}")
 
 
 def delete_graph(username: str, token: str, user_id: str):
-    """delete a pixel graph with username, token and id"""
+    """
+    Deletes a graph from a user's account on Pixela.
+
+    Parameters:
+        username (str): The username of the user.
+        token (str): The token to authenticate the user.
+        user_id (str): The ID of the graph to be deleted.
+    """
     end_point = f"{pixela_endpoint}/{username}/graphs/{user_id}"
 
     header = {
